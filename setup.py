@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-PR Helper Setup Script
+WhatThePatch Setup Script
 
 Interactive setup wizard that:
 1. Installs required dependencies
@@ -20,15 +20,15 @@ from pathlib import Path
 
 
 SCRIPT_DIR = Path(__file__).parent
-INSTALL_DIR = Path.home() / ".pr-helper"
+INSTALL_DIR = Path.home() / ".whatthepatch"
 CONFIG_PATH = INSTALL_DIR / "config.yaml"
 CONFIG_EXAMPLE_PATH = SCRIPT_DIR / "config.example.yaml"
 REQUIREMENTS_PATH = SCRIPT_DIR / "requirements.txt"
-CLI_NAME = "pr-review"
+CLI_NAME = "wtp"
 
 # Files to copy to install directory
 INSTALL_FILES = [
-    "pr_review.py",
+    "whatthepatch.py",
     "prompt.md",
 ]
 
@@ -534,7 +534,7 @@ def run_tests():
 
 
 def install_files():
-    """Copy necessary files to ~/.pr-helper/"""
+    """Copy necessary files to ~/.whatthepatch/"""
     print_step(2, "Installing Files")
 
     # Create install directory
@@ -593,23 +593,23 @@ def get_cli_install_dir() -> Path:
 
 
 def install_cli():
-    """Install the pr-review CLI command."""
+    """Install the wtp CLI command."""
     print_step(5, "Installing CLI Command")
 
     cli_install_dir = get_cli_install_dir()
     cli_path = cli_install_dir / CLI_NAME
-    pr_review_script = INSTALL_DIR / "pr_review.py"
+    main_script = INSTALL_DIR / "whatthepatch.py"
 
     # Create CLI install directory if needed
     cli_install_dir.mkdir(parents=True, exist_ok=True)
 
-    # Create wrapper script pointing to ~/.pr-helper/
+    # Create wrapper script pointing to ~/.whatthepatch/
     wrapper_content = f"""#!/bin/bash
-# PR Review CLI wrapper
+# WhatThePatch CLI wrapper
 # Installed by setup.py
 # Files located at: {INSTALL_DIR}
 
-exec "{sys.executable}" "{pr_review_script}" "$@"
+exec "{sys.executable}" "{main_script}" "$@"
 """
 
     try:
@@ -627,7 +627,7 @@ exec "{sys.executable}" "{pr_review_script}" "$@"
             print("\nThen restart your terminal or run:")
             print(f'  source ~/.zshrc  # or ~/.bashrc')
         else:
-            print(f"\nYou can now use: {CLI_NAME} <PR_URL>")
+            print(f"\nYou can now use: {CLI_NAME} --review <PR_URL>")
 
         return True
     except PermissionError:
@@ -640,8 +640,8 @@ exec "{sys.executable}" "{pr_review_script}" "$@"
 
 
 def uninstall_cli():
-    """Uninstall the pr-review CLI command and installed files."""
-    print_header("Uninstalling PR Review Helper")
+    """Uninstall the wtp CLI command and installed files."""
+    print_header("Uninstalling WhatThePatch")
 
     # Remove CLI command from common locations
     cli_locations = [
@@ -686,7 +686,7 @@ def uninstall_cli():
 
 def main():
     # Parse command line arguments
-    parser = argparse.ArgumentParser(description="PR Helper Setup")
+    parser = argparse.ArgumentParser(description="WhatThePatch Setup")
     parser.add_argument("--uninstall", action="store_true", help="Uninstall the CLI command")
     args = parser.parse_args()
 
@@ -694,9 +694,9 @@ def main():
         uninstall_cli()
         return
 
-    print_header("PR Helper Setup")
+    print_header("WhatThePatch Setup")
 
-    print("This wizard will help you set up PR Helper.\n")
+    print("This wizard will help you set up WhatThePatch.\n")
     print(f"Files will be installed to: {INSTALL_DIR}\n")
 
     choice = prompt_choice(
@@ -741,17 +741,17 @@ def main():
     print(f"Files installed to: {INSTALL_DIR}")
     print(f"You can now delete this repository folder if desired.\n")
     print("Run PR reviews with:")
-    print(f"  {CLI_NAME} <PR_URL>")
+    print(f"  {CLI_NAME} --review <PR_URL>")
     print("\nCommands:")
-    print(f"  {CLI_NAME} <PR_URL>              Review a pull request")
+    print(f"  {CLI_NAME} --review <URL>        Review a pull request")
     print(f"  {CLI_NAME} --status              Show configuration status")
     print(f"  {CLI_NAME} --test-config         Test your configuration")
-    print(f"  {CLI_NAME} --tool-update         Update from repository")
+    print(f"  {CLI_NAME} --update              Update from repository")
     print(f"  {CLI_NAME} --show-prompt         View the review prompt")
     print(f"  {CLI_NAME} --edit-prompt         Edit the review prompt")
     print(f"  {CLI_NAME} --help                Show help")
     print("\nExample:")
-    print(f"  {CLI_NAME} https://github.com/owner/repo/pull/123")
+    print(f"  {CLI_NAME} --review https://github.com/owner/repo/pull/123")
 
 
 if __name__ == "__main__":

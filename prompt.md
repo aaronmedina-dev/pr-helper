@@ -18,7 +18,7 @@ Generate markdown with this exact structure:
 <AI Engine and model used>
 
 ## PR URL
-<PR URL - parameter in pr-review [URL]>
+<PR URL - parameter in wtp --review [URL]>
 
 ## Summary
 

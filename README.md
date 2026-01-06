@@ -1,37 +1,37 @@
-# PR Review Helper
+# WhatThePatch
 
-A CLI tool to automatically generate PR reviews using Claude. Supports GitHub and Bitbucket pull requests.
+A CLI tool to automatically generate PR reviews using AI. Supports GitHub and Bitbucket pull requests.
 
 ## Why This Tool?
 
 Software development has never moved faster. With the evolution of AI-assisted coding, changes are being pushed at unprecedented speed. While this acceleration is exciting, it also presents a challenge: how do we ensure we truly understand the code we're approving?
 
-PR Review Helper was created to help developers digest and understand changes in their codebase. Instead of blindly approving pull requests or spending hours manually reviewing complex diffs, this tool leverages Claude to provide comprehensive, intelligent code reviews that highlight potential issues, security concerns, and areas that need attention.
+WhatThePatch was created to help developers digest and understand changes in their codebase. Instead of blindly approving pull requests or spending hours manually reviewing complex diffs, this tool leverages AI to provide comprehensive, intelligent code reviews that highlight potential issues, security concerns, and areas that need attention.
 
 The goal isn't to replace human judgment, but to augment it - giving reviewers the insights they need to make informed decisions quickly and confidently.
 
 ## How It Compares
 
-There are several AI-powered PR review tools available. Here's how PR Review Helper differs:
+There are several AI-powered PR review tools available. Here's how WhatThePatch differs:
 
-| Feature | PR Review Helper | CodeRabbit, PR-Agent, etc. |
-|---------|------------------|---------------------------|
+| Feature | WhatThePatch | CodeRabbit, PR-Agent, etc. |
+|---------|--------------|---------------------------|
 | **Hosting** | Self-hosted, runs locally | Cloud/SaaS |
-| **Privacy** | Code only sent to Claude API | Code processed by third-party servers |
+| **Privacy** | Code only sent to your chosen AI provider | Code processed by third-party servers |
 | **Output** | Local markdown files you own | Comments on PR (may disappear) |
 | **Review Prompt** | Fully customizable | Fixed or limited configuration |
 | **Bitbucket Support** | Native support | Limited or no support |
 | **GitHub Support** | Native support | Yes |
-| **Cost Model** | Pay-per-use API or free via Claude CLI | Monthly subscription |
-| **Team Auth** | Works with Claude Code team plans | Separate subscription required |
+| **Cost Model** | Pay-per-use API or free via CLI tools | Monthly subscription |
+| **Team Auth** | Works with Claude Code/Codex team plans | Separate subscription required |
 | **Offline Archive** | Reviews saved locally forever | Dependent on service availability |
 
-### When to Use PR Review Helper
+### When to Use WhatThePatch
 
 - You want **full control** over how reviews are conducted
 - You need **Bitbucket support** alongside GitHub
 - You prefer **local archives** of all reviews
-- You're already paying for **Claude API or Claude Code**
+- You're already paying for **Claude API, OpenAI API, or CLI tools**
 - **Privacy matters** - you don't want code on additional third-party servers
 - You want to **customize review criteria** to match your team's standards
 
@@ -63,7 +63,7 @@ This tool is designed for **macOS and Linux**. Here's the compatibility breakdow
 | AI Engines (API/CLI) | Works | Works |
 | Config/YAML handling | Works | Works |
 | API calls (GitHub/Bitbucket) | Works | Works |
-| CLI installation (`pr-review` command) | Works | Not supported |
+| CLI installation (`wtp` command) | Works | Not supported |
 | Interactive setup wizard | Works | Partial |
 
 ### Windows Users
@@ -71,12 +71,12 @@ This tool is designed for **macOS and Linux**. Here's the compatibility breakdow
 The core functionality works on Windows, but the CLI installation does not. Windows users can run the tool directly with Python:
 
 ```bash
-python pr_review.py https://github.com/owner/repo/pull/123
-python pr_review.py --status
-python pr_review.py --test-config
+python whatthepatch.py --review https://github.com/owner/repo/pull/123
+python whatthepatch.py --status
+python whatthepatch.py --test-config
 ```
 
-The setup wizard will install dependencies and create the config file, but the `pr-review` global command will not be available.
+The setup wizard will install dependencies and create the config file, but the `wtp` global command will not be available.
 
 ## Quick Start
 
@@ -90,12 +90,12 @@ This will:
 1. Install required dependencies
 2. Guide you through creating `config.yaml`
 3. Test your configuration
-4. Install the `pr-review` CLI command
+4. Install the `wtp` CLI command
 
 Once complete, you can run reviews from anywhere:
 
 ```bash
-pr-review https://github.com/owner/repo/pull/123
+wtp --review https://github.com/owner/repo/pull/123
 ```
 
 ## Manual Setup
@@ -221,31 +221,31 @@ For both GitHub and Bitbucket private repositories, you need tokens:
 
 ### 5. Install CLI command (optional)
 
-To use `pr-review` from anywhere:
+To use `wtp` from anywhere:
 
 ```bash
 python setup.py
 # Select option 5: "Install CLI command only"
 ```
 
-This creates the `pr-review` command in `~/.local/bin/`.
+This creates the `wtp` command in `~/.local/bin/`.
 
 ## Usage
 
-After running `python setup.py`, the `pr-review` command will be available:
+After running `python setup.py`, the `wtp` command will be available:
 
 ```bash
-pr-review <PR_URL>
+wtp --review <PR_URL>
 ```
 
 ### Examples
 
 ```bash
 # GitHub PR
-pr-review https://github.com/owner/repo/pull/123
+wtp --review https://github.com/owner/repo/pull/123
 
 # Bitbucket PR
-pr-review https://bitbucket.org/workspace/repo/pull-requests/456
+wtp --review https://bitbucket.org/workspace/repo/pull-requests/456
 ```
 
 The review will be saved to the configured output directory (default: `~/pr-reviews/`).
@@ -254,14 +254,14 @@ The review will be saved to the configured output directory (default: `~/pr-revi
 
 | Command | Description |
 |---------|-------------|
-| `pr-review <URL>` | Generate a review for the given PR |
-| `pr-review --help` | Show help and usage information |
-| `pr-review --status` | Show current configuration and active AI engine |
-| `pr-review --switch-engine` | Switch between configured AI engines |
-| `pr-review --test-config` | Test your configuration (tokens, API keys) |
-| `pr-review --tool-update` | Update the tool from the git repository |
-| `pr-review --show-prompt` | Display the current review prompt template |
-| `pr-review --edit-prompt` | Open the prompt template in your editor |
+| `wtp --review <URL>` | Generate a review for the given PR |
+| `wtp --help` | Show help and usage information |
+| `wtp --status` | Show current configuration and active AI engine |
+| `wtp --switch-engine` | Switch between configured AI engines |
+| `wtp --test-config` | Test your configuration (tokens, API keys) |
+| `wtp --update` | Update the tool from the git repository |
+| `wtp --show-prompt` | Display the current review prompt template |
+| `wtp --edit-prompt` | Open the prompt template in your editor |
 
 ### Setup Commands
 
@@ -275,8 +275,8 @@ The review will be saved to the configured output directory (default: `~/pr-revi
 If you prefer not to install the CLI command, you can run directly:
 
 ```bash
-python /path/to/PR-Helper/pr_review.py <PR_URL>
-python /path/to/PR-Helper/pr_review.py --test-config
+python /path/to/whatthepatch.py --review <PR_URL>
+python /path/to/whatthepatch.py --test-config
 ```
 
 ## Configuration Reference
@@ -346,16 +346,16 @@ See `config.example.yaml` for all available options:
 
 ## Customizing the Review Prompt
 
-The review prompt is stored in `prompt.md`. This file controls how Claude analyzes and reports on pull requests. You can customize it to match your team's coding standards, focus areas, and review preferences.
+The review prompt is stored in `prompt.md`. This file controls how the AI analyzes and reports on pull requests. You can customize it to match your team's coding standards, focus areas, and review preferences.
 
 ### Viewing and Editing the Prompt
 
 ```bash
 # View the current prompt
-pr-review --show-prompt
+wtp --show-prompt
 
 # Open in your default editor
-pr-review --edit-prompt
+wtp --edit-prompt
 ```
 
 The `--edit-prompt` command uses your `$EDITOR` or `$VISUAL` environment variable. If not set, it tries `code`, `nano`, `vim`, or `vi` in that order.
@@ -458,7 +458,7 @@ Security-related issues with token expiration and fallback secret should be addr
 
 ## Troubleshooting
 
-### "pr-review: command not found"
+### "wtp: command not found"
 
 The CLI command is not in your PATH. Either:
 1. Run `python setup.py` and select "Install CLI command only"
@@ -484,7 +484,7 @@ Either:
 
 ### Test your configuration
 
-Run `pr-review --test-config` to verify all tokens and credentials are working.
+Run `wtp --test-config` to verify all tokens and credentials are working.
 
 ### API rate limits
 

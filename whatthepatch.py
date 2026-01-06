@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-PR Review Helper
+WhatThePatch - PR Helper Tool
 
 A CLI tool to automatically generate PR reviews using AI.
 Supports GitHub and Bitbucket pull requests.
-Supports multiple AI engines (Claude API, Claude CLI, and more).
+Supports multiple AI engines (Claude API, Claude CLI, OpenAI API, OpenAI Codex CLI).
 
 Usage:
-    python pr_review.py <PR_URL>
+    wtp --review <PR_URL>
 
 Example:
-    python pr_review.py https://github.com/owner/repo/pull/123
-    python pr_review.py https://bitbucket.org/workspace/repo/pull-requests/456
+    wtp --review https://github.com/owner/repo/pull/123
+    wtp --review https://bitbucket.org/workspace/repo/pull-requests/456
 """
 
 import argparse
@@ -27,8 +27,8 @@ import requests
 import yaml
 
 
-# Install directory for all PR Helper files
-INSTALL_DIR = Path.home() / ".pr-helper"
+# Install directory for all WhatThePatch files
+INSTALL_DIR = Path.home() / ".whatthepatch"
 
 # Add install directory to path for engine imports
 if INSTALL_DIR.exists():
@@ -58,7 +58,7 @@ def load_prompt_template() -> str:
 
     if not prompt_path.exists():
         print(f"Error: prompt.md not found at {prompt_path}")
-        print("Please run setup.py to install PR Helper.")
+        print("Please run setup.py to install WhatThePatch.")
         sys.exit(1)
 
     return prompt_path.read_text()
@@ -70,7 +70,7 @@ def load_config() -> dict:
 
     if not config_path.exists():
         print(f"Error: config.yaml not found at {config_path}")
-        print("Please run setup.py to configure PR Helper.")
+        print("Please run setup.py to configure WhatThePatch.")
         sys.exit(1)
 
     with open(config_path) as f:
@@ -197,7 +197,7 @@ def generate_review(pr_data: dict, ticket_id: str, config: dict) -> str:
         from engines import get_engine, EngineError
     except ImportError as e:
         print(f"Error: Could not load engines module: {e}")
-        print("Please run setup.py to install PR Helper properly.")
+        print("Please run setup.py to install WhatThePatch properly.")
         sys.exit(1)
 
     engine_name = config.get("engine", "claude-api")
@@ -337,7 +337,7 @@ def run_config_test() -> bool:
 
 def show_status():
     """Display current configuration status."""
-    print("PR Review Helper - Status\n")
+    print("WhatThePatch - Status\n")
     print("=" * 50)
 
     # Check if config exists
@@ -458,9 +458,9 @@ def show_status():
 
     print("\n" + "=" * 50)
     print("\nCommands:")
-    print("  pr-review --switch-engine  Switch to a different AI engine")
-    print("  pr-review --test-config    Run full configuration tests")
-    print("  pr-review --edit-prompt    Customize review prompt")
+    print("  wtp --switch-engine  Switch to a different AI engine")
+    print("  wtp --test-config    Run full configuration tests")
+    print("  wtp --edit-prompt    Customize review prompt")
 
 
 def get_engine_config_status(engine_name: str, config: dict) -> tuple[bool, str]:
@@ -498,7 +498,7 @@ def get_engine_config_status(engine_name: str, config: dict) -> tuple[bool, str]
 
 def switch_engine():
     """Interactive engine switcher."""
-    print("PR Review Helper - Switch Engine\n")
+    print("WhatThePatch - Switch Engine\n")
     print("=" * 50)
 
     # Check if config exists
@@ -618,14 +618,14 @@ def show_prompt():
 
     if not prompt_path.exists():
         print(f"Error: prompt.md not found at {prompt_path}")
-        print("Run 'python setup.py' to install PR Helper.")
+        print("Run 'python setup.py' to install WhatThePatch.")
         sys.exit(1)
 
     print(f"Prompt file: {prompt_path}\n")
     print("=" * 60)
     print(prompt_path.read_text())
     print("=" * 60)
-    print(f"\nTo edit this prompt, run: pr-review --edit-prompt")
+    print(f"\nTo edit this prompt, run: wtp --edit-prompt")
 
 
 def edit_prompt():
@@ -634,7 +634,7 @@ def edit_prompt():
 
     if not prompt_path.exists():
         print(f"Error: prompt.md not found at {prompt_path}")
-        print("Run 'python setup.py' to install PR Helper.")
+        print("Run 'python setup.py' to install WhatThePatch.")
         sys.exit(1)
 
     # Determine editor
@@ -661,12 +661,12 @@ def edit_prompt():
         sys.exit(1)
 
 
-GITHUB_REPO = "aaronmedina-dev/pr-review-helper"
+GITHUB_REPO = "aaronmedina-dev/pr-helper"
 GITHUB_RAW_BASE = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main"
 
 # Files that can be updated from GitHub
 UPDATABLE_FILES = [
-    "pr_review.py",
+    "whatthepatch.py",
     "prompt.md",
     "engines/__init__.py",
     "engines/base.py",
@@ -678,14 +678,14 @@ UPDATABLE_FILES = [
 
 
 def run_update():
-    """Update PR Helper from GitHub."""
-    print("Updating PR Helper...\n")
+    """Update WhatThePatch from GitHub."""
+    print("Updating WhatThePatch...\n")
     print(f"Install directory: {INSTALL_DIR}")
     print(f"Source: github.com/{GITHUB_REPO}\n")
 
     if not INSTALL_DIR.exists():
         print(f"Error: Install directory not found at {INSTALL_DIR}")
-        print("Please run setup.py first to install PR Helper.")
+        print("Please run setup.py first to install WhatThePatch.")
         sys.exit(1)
 
     # Ensure engines directory exists
@@ -731,18 +731,19 @@ def run_update():
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate PR reviews using Claude",
+        prog="wtp",
+        description="WhatThePatch - Generate AI-powered PR reviews",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  pr-review https://github.com/owner/repo/pull/123
-  pr-review https://bitbucket.org/workspace/repo/pull-requests/456
-  pr-review --status
-  pr-review --switch-engine
-  pr-review --test-config
-  pr-review --tool-update
-  pr-review --show-prompt
-  pr-review --edit-prompt
+  wtp --review https://github.com/owner/repo/pull/123
+  wtp --review https://bitbucket.org/workspace/repo/pull-requests/456
+  wtp --status
+  wtp --switch-engine
+  wtp --test-config
+  wtp --update
+  wtp --show-prompt
+  wtp --edit-prompt
 
 Author:
   Aaron Medina
@@ -750,14 +751,18 @@ Author:
   LinkedIn: https://www.linkedin.com/in/aamedina/
 """,
     )
-    parser.add_argument("pr_url", nargs="?", help="URL of the pull request to review")
+    parser.add_argument(
+        "--review", "-r",
+        metavar="URL",
+        help="URL of the pull request to review",
+    )
     parser.add_argument(
         "--test-config",
         action="store_true",
         help="Test the current configuration",
     )
     parser.add_argument(
-        "--tool-update",
+        "--update",
         action="store_true",
         help="Update the tool from the git repository",
     )
@@ -784,7 +789,7 @@ Author:
     args = parser.parse_args()
 
     # Handle special commands
-    if args.tool_update:
+    if args.update:
         run_update()
         return
 
@@ -808,7 +813,7 @@ Author:
         success = run_config_test()
         sys.exit(0 if success else 1)
 
-    if not args.pr_url:
+    if not args.review:
         parser.print_help()
         sys.exit(1)
 
@@ -816,7 +821,7 @@ Author:
     config = load_config()
 
     print(f"Parsing PR URL...")
-    pr_info = parse_pr_url(args.pr_url)
+    pr_info = parse_pr_url(args.review)
     print(f"  Platform: {pr_info['platform']}")
     print(f"  Repository: {pr_info['owner']}/{pr_info['repo']}")
     print(f"  PR Number: {pr_info['pr_number']}")

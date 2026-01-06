@@ -1,5 +1,5 @@
 """
-PR Review Helper - AI Engines
+WhatThePatch - AI Engines
 
 This module provides pluggable AI engine support for generating PR reviews.
 Each engine implements the BaseEngine interface.
