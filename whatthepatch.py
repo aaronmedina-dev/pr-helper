@@ -661,7 +661,7 @@ def edit_prompt():
         sys.exit(1)
 
 
-GITHUB_REPO = "aaronmedina-dev/pr-helper"
+GITHUB_REPO = "aaronmedina-dev/WhatThePatch"
 GITHUB_RAW_BASE = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main"
 
 # Files that can be updated from GitHub
