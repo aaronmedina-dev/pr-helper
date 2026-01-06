@@ -18,7 +18,7 @@ There are several AI-powered PR review tools available. Here's how WhatThePatch 
 |---------|--------------|---------------------------|
 | **Hosting** | Self-hosted, runs locally | Cloud/SaaS |
 | **Privacy** | Code only sent to your chosen AI provider | Code processed by third-party servers |
-| **Output** | Local markdown files you own | Comments on PR (may disappear) |
+| **Output Formats** | Markdown, plain text, or styled HTML | PR comments only |
 | **Review Prompt** | Fully customizable | Fixed or limited configuration |
 | **Bitbucket Support** | Native support | Limited or no support |
 | **GitHub Support** | Native support | Yes |
@@ -258,6 +258,28 @@ wtp --review https://github.com/owner/repo/pull/123 --no-open
 ```
 
 The review will be saved to the configured output directory (default: `~/pr-reviews/`).
+
+### Output Formats
+
+WhatThePatch supports three output formats:
+
+| Format | Extension | Description |
+|--------|-----------|-------------|
+| `md` | `.md` | Markdown (default) - Best for viewing in code editors or GitHub |
+| `txt` | `.txt` | Plain text - Same as markdown but with .txt extension |
+| `html` | `.html` | Styled HTML - GitHub-like styling with syntax highlighting |
+
+**HTML Output Features:**
+- GitHub-inspired styling with clean typography
+- Automatic dark/light mode based on system preferences
+- Syntax highlighting for code blocks (powered by Pygments)
+- Responsive layout for different screen sizes
+- Self-contained file (all CSS embedded)
+
+**Auto-Open Behavior:**
+- **HTML files**: Open in your default web browser
+- **MD/TXT files**: Open in your default text editor
+- Disable with `--no-open` flag or set `auto_open: false` in config
 
 ### CLI Commands
 
