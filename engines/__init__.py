@@ -1,0 +1,59 @@
+"""
+PR Review Helper - AI Engines
+
+This module provides pluggable AI engine support for generating PR reviews.
+Each engine implements the BaseEngine interface.
+
+Available engines:
+- claude-api: Anthropic Claude API (direct)
+- claude-cli: Claude Code CLI (uses existing auth)
+- openai-api: OpenAI GPT models (direct API)
+- openai-codex-cli: OpenAI Codex CLI (uses existing ChatGPT auth)
+
+Future engines:
+- gemini: Google Gemini
+- ollama: Local Ollama models
+"""
+
+from .base import BaseEngine, EngineError
+from .claude_api import ClaudeAPIEngine
+from .claude_cli import ClaudeCLIEngine
+from .openai_api import OpenAIAPIEngine
+from .openai_codex_cli import OpenAICodexCLIEngine
+
+# Registry of available engines
+ENGINES = {
+    "claude-api": ClaudeAPIEngine,
+    "claude-cli": ClaudeCLIEngine,
+    "openai-api": OpenAIAPIEngine,
+    "openai-codex-cli": OpenAICodexCLIEngine,
+}
+
+
+def get_engine(engine_name: str, config: dict) -> BaseEngine:
+    """
+    Factory function to get an engine instance by name.
+
+    Args:
+        engine_name: Name of the engine (e.g., 'claude-api', 'claude-cli')
+        config: Full configuration dictionary
+
+    Returns:
+        Configured engine instance
+
+    Raises:
+        EngineError: If engine is not found or configuration is invalid
+    """
+    if engine_name not in ENGINES:
+        available = ", ".join(ENGINES.keys())
+        raise EngineError(f"Unknown engine: {engine_name}. Available: {available}")
+
+    engine_class = ENGINES[engine_name]
+    engine_config = config.get("engines", {}).get(engine_name, {})
+
+    return engine_class(engine_config)
+
+
+def list_engines() -> list:
+    """Return list of available engine names."""
+    return list(ENGINES.keys())

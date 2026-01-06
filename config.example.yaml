@@ -1,0 +1,88 @@
+# PR Review Helper Configuration
+# Copy this file to config.yaml and fill in your values
+
+# Active engine - which AI to use for reviews
+# Available engines:
+#   - "claude-api": Anthropic Claude API (requires API key)
+#   - "claude-cli": Claude Code CLI (uses your existing team auth)
+#   - "openai-api": OpenAI API (requires API key)
+#   - "openai-codex-cli": OpenAI Codex CLI (uses your existing ChatGPT auth)
+# Future engines: "gemini", "ollama"
+engine: "claude-api"
+
+# Engine-specific configurations
+engines:
+  # Anthropic Claude API settings
+  claude-api:
+    api_key: "sk-ant-api03-..."
+    model: "claude-sonnet-4-20250514"
+    max_tokens: 4096
+
+  # Claude Code CLI settings
+  claude-cli:
+    # Path to claude executable (leave empty to use system PATH)
+    path: ""
+    # Additional arguments to pass to claude command
+    # Example: ["--model", "opus"]
+    args: []
+
+  # OpenAI API settings
+  openai-api:
+    api_key: "sk-..."
+    model: "gpt-4o"
+    max_tokens: 4096
+
+  # OpenAI Codex CLI settings
+  openai-codex-cli:
+    # Path to codex executable (leave empty to use system PATH)
+    path: ""
+    # Model to use (default: gpt-5-codex)
+    model: "gpt-5-codex"
+    # Optional API key (can also use CODEX_API_KEY env var or ChatGPT sign-in)
+    api_key: ""
+
+  # Google Gemini settings (future)
+  # gemini:
+  #   api_key: "..."
+  #   model: "gemini-pro"
+
+  # Ollama local models (future)
+  # ollama:
+  #   host: "localhost:11434"
+  #   model: "llama3"
+
+# Repository access tokens
+tokens:
+  # GitHub Personal Access Token
+  # Create at: https://github.com/settings/tokens
+  # Required scopes: repo (for private repos)
+  github: "ghp_..."
+
+  # Bitbucket App Password
+  # Create at: https://bitbucket.org/account/settings/app-passwords/
+  # Required permissions: Repositories (Read)
+  bitbucket_username: "your-username"
+  bitbucket_app_password: "..."
+
+# Output settings
+output:
+  # Directory where review files will be saved
+  # Supports ~ for home directory
+  directory: "~/pr-reviews"
+
+  # Filename pattern. Available variables:
+  # {repo} - repository name
+  # {pr_number} - PR number
+  # {ticket_id} - extracted ticket ID (or "NO-TICKET" if not found)
+  # {branch} - source branch name (sanitized)
+  filename_pattern: "{repo}-{pr_number}.md"
+
+# Ticket ID extraction
+ticket:
+  # Regex pattern to extract ticket ID from branch name
+  # Default matches patterns like: ABC-123, JIRA-456, PROJ-789
+  # The first capture group is used as the ticket ID
+  pattern: "([A-Z]+-\\d+)"
+
+  # Fallback if no ticket ID found
+  fallback: "NO-TICKET"
