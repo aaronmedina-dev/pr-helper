@@ -409,6 +409,7 @@ The `--edit-prompt` command uses your `$EDITOR` or `$VISUAL` environment variabl
 |----------|-------------|
 | `{ticket_id}` | Extracted ticket ID from branch name |
 | `{pr_title}` | Pull request title |
+| `{pr_url}` | Full URL of the pull request |
 | `{source_branch}` | Source branch name |
 | `{target_branch}` | Target branch name |
 | `{pr_description}` | PR description body |

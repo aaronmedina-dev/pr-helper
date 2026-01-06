@@ -108,6 +108,7 @@ class BaseEngine(ABC):
         return prompt_template.format(
             ticket_id=ticket_id,
             pr_title=pr_data["title"],
+            pr_url=pr_data.get("pr_url", ""),
             source_branch=pr_data["source_branch"],
             target_branch=pr_data["target_branch"],
             pr_description=pr_data["description"],

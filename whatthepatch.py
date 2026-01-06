@@ -1077,6 +1077,9 @@ Author:
             config["tokens"]["bitbucket_app_password"],
         )
 
+    # Add PR URL to data for template
+    pr_data["pr_url"] = args.review
+
     print(f"  Title: {pr_data['title']}")
     print(f"  Branch: {pr_data['source_branch']} -> {pr_data['target_branch']}")
 
