@@ -817,34 +817,38 @@ def switch_engine():
     print("or 's' to set up a new engine, or 'q' to quit.")
     print()
 
-    while True:
-        choice = input("Your choice: ").strip().lower()
+    try:
+        while True:
+            choice = input("Your choice: ").strip().lower()
 
-        if choice == 'q':
-            print("No changes made.")
-            return
+            if choice == 'q':
+                print("No changes made.")
+                return
 
-        if choice == 's':
-            print("\nTo set up a new engine, run: python setup.py")
-            return
+            if choice == 's':
+                print("\nTo set up a new engine, run: python setup.py")
+                return
 
-        try:
-            choice_num = int(choice)
-            if 1 <= choice_num <= len(available_engines):
-                selected_engine = available_engines[choice_num - 1]
-                break
-            else:
-                print(f"Please enter a number between 1 and {len(available_engines)}")
-        except ValueError:
-            print("Invalid input. Enter a number, 's', or 'q'.")
+            try:
+                choice_num = int(choice)
+                if 1 <= choice_num <= len(available_engines):
+                    selected_engine = available_engines[choice_num - 1]
+                    break
+                else:
+                    print(f"Please enter a number between 1 and {len(available_engines)}")
+            except ValueError:
+                print("Invalid input. Enter a number, 's', or 'q'.")
 
-    # Check if selected engine is configured
-    if not engine_status[selected_engine]:
-        print(f"\nWarning: {selected_engine} is not fully configured.")
-        confirm = input("Switch anyway? (y/n): ").strip().lower()
-        if confirm != 'y':
-            print("No changes made.")
-            return
+        # Check if selected engine is configured
+        if not engine_status[selected_engine]:
+            print(f"\nWarning: {selected_engine} is not fully configured.")
+            confirm = input("Switch anyway? (y/n): ").strip().lower()
+            if confirm != 'y':
+                print("No changes made.")
+                return
+    except KeyboardInterrupt:
+        print("\n\nCancelled.")
+        return
 
     # Update config file
     if selected_engine == current_engine:
@@ -925,22 +929,26 @@ def switch_output():
     print("or 'q' to quit.")
     print()
 
-    while True:
-        choice = input("Your choice: ").strip().lower()
+    try:
+        while True:
+            choice = input("Your choice: ").strip().lower()
 
-        if choice == 'q':
-            print("No changes made.")
-            return
+            if choice == 'q':
+                print("No changes made.")
+                return
 
-        try:
-            choice_num = int(choice)
-            if 1 <= choice_num <= len(available_formats):
-                selected_format = available_formats[choice_num - 1][0]
-                break
-            else:
-                print(f"Please enter a number between 1 and {len(available_formats)}")
-        except ValueError:
-            print("Invalid input. Enter a number or 'q'.")
+            try:
+                choice_num = int(choice)
+                if 1 <= choice_num <= len(available_formats):
+                    selected_format = available_formats[choice_num - 1][0]
+                    break
+                else:
+                    print(f"Please enter a number between 1 and {len(available_formats)}")
+            except ValueError:
+                print("Invalid input. Enter a number or 'q'.")
+    except KeyboardInterrupt:
+        print("\n\nCancelled.")
+        return
 
     # Update config file
     if selected_format == current_format:
@@ -1277,4 +1285,8 @@ Author:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\nOperation cancelled.")
+        sys.exit(0)
