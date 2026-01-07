@@ -18,6 +18,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from banner import print_banner
+
 
 SCRIPT_DIR = Path(__file__).parent
 INSTALL_DIR = Path.home() / ".whatthepatch"
@@ -30,6 +32,7 @@ CLI_NAME = "wtp"
 INSTALL_FILES = [
     "whatthepatch.py",
     "prompt.md",
+    "banner.py",
 ]
 
 # Directories to copy to install directory
@@ -694,6 +697,7 @@ def main():
         uninstall_cli()
         return
 
+    print_banner()
     print_header("WhatThePatch Setup")
 
     print("This wizard will help you set up WhatThePatch.\n")

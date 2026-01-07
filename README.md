@@ -1,4 +1,6 @@
-# WhatThePatch
+![WhatThePatch!? Banner](assets/wtp_banner.png)
+
+# WhatThePatch!?
 
 A CLI tool to automatically generate PR reviews using AI. Supports GitHub and Bitbucket pull requests.
 

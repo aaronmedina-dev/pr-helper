@@ -28,6 +28,8 @@ from urllib.parse import urlparse
 import requests
 import yaml
 
+from banner import print_banner
+
 
 # Install directory for all WhatThePatch files
 INSTALL_DIR = Path.home() / ".whatthepatch"
@@ -1096,6 +1098,10 @@ def run_update():
 
 
 def main():
+    # Show banner for help
+    if len(sys.argv) == 1 or "-h" in sys.argv or "--help" in sys.argv:
+        print_banner()
+
     parser = argparse.ArgumentParser(
         prog="wtp",
         description="WhatThePatch - Generate AI-powered PR reviews",
