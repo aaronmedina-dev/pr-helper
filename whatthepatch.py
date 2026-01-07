@@ -379,6 +379,38 @@ strong {
 .highlight .p { color: var(--color-fg-default); } /* Punctuation */
 .highlight .nf { color: #8250df; } /* Function */
 .highlight .nc { color: #953800; } /* Class */
+/* Severity badges */
+.severity-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 8px;
+}
+.severity-critical {
+    background-color: #d73a49;
+    color: #ffffff;
+}
+.severity-high {
+    background-color: #e36209;
+    color: #ffffff;
+}
+.severity-medium {
+    background-color: #dbab09;
+    color: #1f2328;
+}
+.severity-low {
+    background-color: #28a745;
+    color: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+    .severity-critical { background-color: #f85149; }
+    .severity-high { background-color: #db6d28; }
+    .severity-medium { background-color: #d29922; color: #ffffff; }
+    .severity-low { background-color: #3fb950; }
+}
 </style>
 """
 
@@ -414,6 +446,22 @@ def convert_to_html(markdown_content: str, title: str = "PR Review") -> str:
         ]
     )
     html_body = md.convert(markdown_content)
+
+    # Post-process: Convert severity labels to styled badges
+    # Matches patterns like: <h3>🔴 Critical: Issue Title</h3>
+    severity_patterns = [
+        (r'(<h3>)\s*🔴\s*Critical:', r'\1<span class="severity-badge severity-critical">Critical</span>'),
+        (r'(<h3>)\s*🟠\s*High:', r'\1<span class="severity-badge severity-high">High</span>'),
+        (r'(<h3>)\s*🟡\s*Medium:', r'\1<span class="severity-badge severity-medium">Medium</span>'),
+        (r'(<h3>)\s*🟢\s*Low:', r'\1<span class="severity-badge severity-low">Low</span>'),
+        # Also handle without emoji (fallback)
+        (r'(<h3>)\s*Critical:', r'\1<span class="severity-badge severity-critical">Critical</span>'),
+        (r'(<h3>)\s*High:', r'\1<span class="severity-badge severity-high">High</span>'),
+        (r'(<h3>)\s*Medium:', r'\1<span class="severity-badge severity-medium">Medium</span>'),
+        (r'(<h3>)\s*Low:', r'\1<span class="severity-badge severity-low">Low</span>'),
+    ]
+    for pattern, replacement in severity_patterns:
+        html_body = re.sub(pattern, replacement, html_body, flags=re.IGNORECASE)
 
     # Wrap in full HTML document with styling
     return f"""<!DOCTYPE html>

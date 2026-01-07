@@ -49,7 +49,15 @@ Generate markdown with this exact structure:
 
 ## Issues Found
 
-### <Severity>: <Short Issue Title>
+### <Severity Emoji> <Severity>: <Short Issue Title>
+
+Use these severity indicators:
+- 🔴 Critical
+- 🟠 High
+- 🟡 Medium
+- 🟢 Low
+
+Example: ### 🔴 Critical: Missing ARIA Labels on Interactive Elements
 
 **File:** `<file_path:line_numbers>`
 
@@ -91,10 +99,10 @@ Generate markdown with this exact structure:
 
 ## Severity Definitions
 
-- **Critical**: Accessibility violations (WCAG A/AA), XSS vulnerabilities, complete functionality breakage, data exposure
-- **High**: Major UX issues, significant performance regressions, broken responsive layouts, memory leaks
-- **Medium**: Minor accessibility issues, suboptimal performance, inconsistent UI patterns, poor error handling
-- **Low**: Code style issues, minor UX improvements, optimization opportunities, documentation gaps
+- 🔴 **Critical**: Accessibility violations (WCAG A/AA), XSS vulnerabilities, complete functionality breakage, data exposure
+- 🟠 **High**: Major UX issues, significant performance regressions, broken responsive layouts, memory leaks
+- 🟡 **Medium**: Minor accessibility issues, suboptimal performance, inconsistent UI patterns, poor error handling
+- 🟢 **Low**: Code style issues, minor UX improvements, optimization opportunities, documentation gaps
 
 ## Rules
 

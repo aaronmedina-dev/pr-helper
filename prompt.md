@@ -34,7 +34,15 @@ Generate markdown with this exact structure:
 
 ## Issues Found
 
-### <Severity>: <Short Issue Title>
+### <Severity Emoji> <Severity>: <Short Issue Title>
+
+Use these severity indicators:
+- 🔴 Critical
+- 🟠 High
+- 🟡 Medium
+- 🟢 Low
+
+Example: ### 🔴 Critical: SQL Injection Vulnerability
 
 **File:** `<file_path:line_numbers>`
 
@@ -76,10 +84,10 @@ Generate markdown with this exact structure:
 
 ## Severity Definitions
 
-- **Critical**: Security vulnerabilities, data loss risks, breaking changes
-- **High**: Bugs that will cause failures, significant performance issues
-- **Medium**: Code quality issues, potential edge case bugs, maintainability concerns
-- **Low**: Style issues, minor improvements, defense-in-depth suggestions
+- 🔴 **Critical**: Security vulnerabilities, data loss risks, breaking changes
+- 🟠 **High**: Bugs that will cause failures, significant performance issues
+- 🟡 **Medium**: Code quality issues, potential edge case bugs, maintainability concerns
+- 🟢 **Low**: Style issues, minor improvements, defense-in-depth suggestions
 
 ## Rules
 

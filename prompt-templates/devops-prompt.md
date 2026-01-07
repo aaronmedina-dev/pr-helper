@@ -49,7 +49,15 @@ Generate markdown with this exact structure:
 
 ## Issues Found
 
-### <Severity>: <Short Issue Title>
+### <Severity Emoji> <Severity>: <Short Issue Title>
+
+Use these severity indicators:
+- 🔴 Critical
+- 🟠 High
+- 🟡 Medium
+- 🟢 Low
+
+Example: ### 🔴 Critical: Secrets Exposed in Config
 
 **File:** `<file_path:line_numbers>`
 
@@ -91,10 +99,10 @@ Generate markdown with this exact structure:
 
 ## Severity Definitions
 
-- **Critical**: Security vulnerabilities, secrets exposure, production-breaking changes, data loss risks
-- **High**: Missing resource limits, no rollback strategy, insecure defaults, breaking infrastructure changes
-- **Medium**: Suboptimal configurations, missing health checks, inadequate logging, cost inefficiencies
-- **Low**: Style issues, minor optimizations, documentation gaps, non-critical best practice violations
+- 🔴 **Critical**: Security vulnerabilities, secrets exposure, production-breaking changes, data loss risks
+- 🟠 **High**: Missing resource limits, no rollback strategy, insecure defaults, breaking infrastructure changes
+- 🟡 **Medium**: Suboptimal configurations, missing health checks, inadequate logging, cost inefficiencies
+- 🟢 **Low**: Style issues, minor optimizations, documentation gaps, non-critical best practice violations
 
 ## Rules
 

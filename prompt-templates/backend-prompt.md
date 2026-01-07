@@ -49,7 +49,15 @@ Generate markdown with this exact structure:
 
 ## Issues Found
 
-### <Severity>: <Short Issue Title>
+### <Severity Emoji> <Severity>: <Short Issue Title>
+
+Use these severity indicators:
+- 🔴 Critical
+- 🟠 High
+- 🟡 Medium
+- 🟢 Low
+
+Example: ### 🔴 Critical: SQL Injection Vulnerability
 
 **File:** `<file_path:line_numbers>`
 
@@ -91,10 +99,10 @@ Generate markdown with this exact structure:
 
 ## Severity Definitions
 
-- **Critical**: SQL/command injection, auth bypass, data exposure, data loss/corruption risks, breaking API changes
-- **High**: N+1 queries on critical paths, missing authorization checks, race conditions, unhandled exceptions in critical flows
-- **Medium**: Missing input validation, suboptimal queries, inadequate error handling, missing indexes, poor API design
-- **Low**: Code style issues, minor optimizations, logging improvements, documentation gaps
+- 🔴 **Critical**: SQL/command injection, auth bypass, data exposure, data loss/corruption risks, breaking API changes
+- 🟠 **High**: N+1 queries on critical paths, missing authorization checks, race conditions, unhandled exceptions in critical flows
+- 🟡 **Medium**: Missing input validation, suboptimal queries, inadequate error handling, missing indexes, poor API design
+- 🟢 **Low**: Code style issues, minor optimizations, logging improvements, documentation gaps
 
 ## Rules
 
